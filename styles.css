@@ -1,1 +1,105 @@
 /*  your css code here. If applicable */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #ffffff;
+}
+
+.container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    font-family: 'Kalam', cursive;
+    font-size: 3rem;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+/* --- Setup Section Styles --- */
+#setup-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+}
+
+input[type="text"] {
+    padding: 8px;
+    font-size: 1.2rem;
+    border: 2px solid #000;
+    outline: none;
+    width: 200px;
+}
+
+input::placeholder {
+    color: #999;
+}
+
+#submit {
+    margin-top: 15px;
+    padding: 10px 40px;
+    font-size: 1.2rem;
+    background-color: white;
+    border: 2px solid #000;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#submit:hover {
+    background-color: #f0f0f0;
+}
+
+/* --- Game Section Styles --- */
+#game-section {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+.message {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 120px);
+    grid-template-rows: repeat(3, 120px);
+    gap: 0;
+    border: 2px solid #000;
+}
+
+.cell {
+    width: 120px;
+    height: 120px;
+    background-color: #ffc0cb; /* Pink background */
+    border: 1px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Kalam', cursive;
+    font-size: 4rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.cell.winner {
+    background-color: #800080; /* Purple background for winning cells */
+    color: #000;
+}
