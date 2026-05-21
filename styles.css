@@ -86,7 +86,7 @@ h1 {
 
 .cell {
     border: 1px solid #000;
-    background-color: #ffc0cb; /* Pinkish color like the video */
+    background-color: #ffc0cb; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -96,6 +96,6 @@ h1 {
 }
 
 .cell.win-highlight {
-    background-color: #800080; /* Purple highlight for winning cells */
+    background-color: #800080; 
     color: #000;
 }
