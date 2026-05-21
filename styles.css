@@ -1,4 +1,3 @@
-/* Base styles */
 body {
     font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
     display: flex;
@@ -23,7 +22,6 @@ h1 {
     letter-spacing: 2px;
 }
 
-/* Input section styling */
 #setup-section {
     display: flex;
     flex-direction: column;
@@ -65,9 +63,7 @@ h1 {
     background: #f0f0f0;
 }
 
-/* Game Board section styling */
 #game-section {
-    display: flex; /* Kept visible so Cypress can always find it */
     flex-direction: column;
     align-items: center;
 }
@@ -77,22 +73,7 @@ h1 {
     margin-bottom: 20px;
 }
 
-.board {
-    display: grid;
-    grid-template-columns: repeat(3, 120px);
-    grid-template-rows: repeat(3, 120px);
-    border: 2px solid #000;
-}
-
 .cell {
-    border: 1px solid #000;
     background-color: #ffc0cb; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 4rem;
-    cursor: pointer;
     user-select: none;
-    width: 120px;
-    height: 120px;
 }
