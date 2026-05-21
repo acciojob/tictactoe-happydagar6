@@ -1,79 +1,79 @@
-/*  your css code here. If applicable */
+/* Base styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
     background-color: #ffffff;
+    color: #000;
 }
 
+/* Container specified in prompt */
 .container {
-    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
 }
 
 h1 {
-    font-family: 'Kalam', cursive;
-    font-size: 3rem;
+    font-size: 3.5rem;
     margin-bottom: 20px;
     letter-spacing: 2px;
 }
 
-/* --- Setup Section Styles --- */
+/* Input section styling */
 #setup-section {
     display: flex;
     flex-direction: column;
-    gap: 15px;
     align-items: center;
+    gap: 15px;
 }
 
 .input-group {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 10px;
-    font-size: 1.2rem;
+    width: 350px;
+    font-size: 1.5rem;
 }
 
-input[type="text"] {
-    padding: 8px;
+.input-group input {
     font-size: 1.2rem;
+    padding: 8px;
+    width: 220px;
     border: 2px solid #000;
     outline: none;
-    width: 200px;
-}
-
-input::placeholder {
-    color: #999;
+    font-family: inherit;
 }
 
 #submit {
     margin-top: 15px;
-    padding: 10px 40px;
-    font-size: 1.2rem;
-    background-color: white;
+    padding: 10px 0;
+    font-size: 1.5rem;
+    background: #fff;
     border: 2px solid #000;
     cursor: pointer;
-    border-radius: 4px;
+    width: 350px;
+    font-family: inherit;
+    transition: background 0.2s;
 }
 
 #submit:hover {
-    background-color: #f0f0f0;
+    background: #f0f0f0;
 }
 
-/* --- Game Section Styles --- */
+/* Game Board section styling */
 #game-section {
-    display: none;
+    display: none; /* Hidden initially */
     flex-direction: column;
     align-items: center;
 }
 
 .message {
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 1.8rem;
     margin-bottom: 20px;
 }
 
@@ -81,25 +81,21 @@ input::placeholder {
     display: grid;
     grid-template-columns: repeat(3, 120px);
     grid-template-rows: repeat(3, 120px);
-    gap: 0;
     border: 2px solid #000;
 }
 
 .cell {
-    width: 120px;
-    height: 120px;
-    background-color: #ffc0cb; /* Pink background */
     border: 1px solid #000;
+    background-color: #ffc0cb; /* Pinkish color like the video */
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Kalam', cursive;
     font-size: 4rem;
     cursor: pointer;
     user-select: none;
 }
 
-.cell.winner {
-    background-color: #800080; /* Purple background for winning cells */
+.cell.win-highlight {
+    background-color: #800080; /* Purple highlight for winning cells */
     color: #000;
 }

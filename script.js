@@ -1,25 +1,29 @@
-//your JS code here. If required.
 // DOM Elements
 const setupSection = document.getElementById('setup-section');
 const gameSection = document.getElementById('game-section');
-const submitBtn = document.getElementById('submit');
 const player1Input = document.getElementById('player-1');
 const player2Input = document.getElementById('player-2');
+const submitBtn = document.getElementById('submit');
 const messageDiv = document.querySelector('.message');
 const cells = document.querySelectorAll('.cell');
 
 // Game State Variables
-let player1Name = '';
-let player2Name = '';
+let player1Name = "";
+let player2Name = "";
 let currentPlayer = 1; // 1 for Player 1 (x), 2 for Player 2 (o)
 let gameActive = false;
 let boardState = ["", "", "", "", "", "", "", "", ""];
 
-// Winning Combinations (using 0-based indices corresponding to cell IDs 1-9)
+// Winning combinations (indexes of the boardState array)
 const winningConditions = [
-    [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-    [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-    [0, 4, 8], [2, 4, 6]             // Diagonals
+    [0, 1, 2], // Top row
+    [3, 4, 5], // Middle row
+    [6, 7, 8], // Bottom row
+    [0, 3, 6], // Left column
+    [1, 4, 7], // Middle column
+    [2, 5, 8], // Right column
+    [0, 4, 8], // Diagonal 1
+    [2, 4, 6]  // Diagonal 2
 ];
 
 // Start Game Event
@@ -27,81 +31,86 @@ submitBtn.addEventListener('click', () => {
     player1Name = player1Input.value.trim();
     player2Name = player2Input.value.trim();
 
-    if (player1Name === '' || player2Name === '') {
+    if (player1Name === "" || player2Name === "") {
         alert("Please enter names for both players.");
         return;
     }
 
     // Hide setup, show game board
-    setupSection.style.display = 'none';
-    gameSection.style.display = 'flex';
-    
+    setupSection.style.display = "none";
+    gameSection.style.display = "flex";
     gameActive = true;
+    currentPlayer = 1;
+    
     updateMessage();
 });
 
-// Handle Cell Clicks
+// Cell Click Event
 cells.forEach(cell => {
-    cell.addEventListener('click', () => {
-        const cellIndex = parseInt(cell.id) - 1; // Convert id (1-9) to array index (0-8)
+    cell.addEventListener('click', (e) => {
+        // Get the cell ID and subtract 1 to match array index (0-8)
+        const cellIndex = parseInt(e.target.id) - 1;
 
-        // Prevent action if cell is already clicked or game is over
+        // Check if cell is already played or game is over
         if (boardState[cellIndex] !== "" || !gameActive) {
             return;
         }
 
         // Update board and UI
-        if (currentPlayer === 1) {
-            boardState[cellIndex] = "x";
-            cell.textContent = "x";
-        } else {
-            boardState[cellIndex] = "o";
-            cell.textContent = "o";
-        }
+        const mark = currentPlayer === 1 ? 'x' : 'o';
+        boardState[cellIndex] = mark;
+        e.target.innerText = mark;
 
-        checkWinOrDraw();
+        checkWin();
     });
 });
 
-// Update the turn message
+// Function to update the turn message
 function updateMessage() {
-    if (currentPlayer === 1) {
-        messageDiv.textContent = `${player1Name}, you're up`;
-    } else {
-        messageDiv.textContent = `${player2Name}, you're up`;
-    }
+    if (!gameActive) return;
+    const currentName = currentPlayer === 1 ? player1Name : player2Name;
+    messageDiv.innerText = `${currentName}, you're up`;
 }
 
-// Check for Win or Draw
-function checkWinOrDraw() {
+// Function to validate if someone won or drew
+function checkWin() {
     let roundWon = false;
     let winningCells = [];
 
     for (let i = 0; i < winningConditions.length; i++) {
-        const [a, b, c] = winningConditions[i];
-        if (boardState[a] && boardState[a] === boardState[b] && boardState[a] === boardState[c]) {
+        const winCondition = winningConditions[i];
+        let a = boardState[winCondition[0]];
+        let b = boardState[winCondition[1]];
+        let c = boardState[winCondition[2]];
+
+        if (a === "" || b === "" || c === "") {
+            continue;
+        }
+        if (a === b && b === c) {
             roundWon = true;
-            winningCells = [a, b, c];
+            winningCells = winCondition;
             break;
         }
     }
 
+    // If Win
     if (roundWon) {
-        gameActive = false;
         const winnerName = currentPlayer === 1 ? player1Name : player2Name;
-        messageDiv.textContent = `${winnerName}, congratulations you won!`;
+        messageDiv.innerText = `${winnerName} congratulations you won!`;
+        gameActive = false;
         
-        // Highlight winning cells
+        // Highlight the winning row/column/diagonal
         winningCells.forEach(index => {
-            document.getElementById((index + 1).toString()).classList.add('winner');
+            document.getElementById((index + 1).toString()).classList.add('win-highlight');
         });
         return;
     }
 
-    // Check for Draw
-    if (!boardState.includes("")) {
+    // If Draw
+    let roundDraw = !boardState.includes("");
+    if (roundDraw) {
+        messageDiv.innerText = `It's a draw!`;
         gameActive = false;
-        messageDiv.textContent = "It's a draw!";
         return;
     }
 
