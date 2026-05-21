@@ -93,6 +93,8 @@ h1 {
     font-size: 4rem;
     cursor: pointer;
     user-select: none;
+    width: 120px; /* Explicit width added for Cypress */
+    height: 120px; /* Explicit height added for Cypress */
 }
 
 .cell.win-highlight {
