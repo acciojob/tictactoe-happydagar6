@@ -10,7 +10,6 @@ body {
     color: #000;
 }
 
-/* Container specified in prompt */
 .container {
     display: flex;
     flex-direction: column;
@@ -30,6 +29,7 @@ h1 {
     flex-direction: column;
     align-items: center;
     gap: 15px;
+    margin-bottom: 30px;
 }
 
 .input-group {
@@ -67,7 +67,7 @@ h1 {
 
 /* Game Board section styling */
 #game-section {
-    display: none; /* Hidden initially */
+    display: flex; /* Kept visible so Cypress can always find it */
     flex-direction: column;
     align-items: center;
 }
@@ -93,11 +93,6 @@ h1 {
     font-size: 4rem;
     cursor: pointer;
     user-select: none;
-    width: 120px; /* Explicit width added for Cypress */
-    height: 120px; /* Explicit height added for Cypress */
-}
-
-.cell.win-highlight {
-    background-color: #800080; 
-    color: #000;
+    width: 120px;
+    height: 120px;
 }

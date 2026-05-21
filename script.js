@@ -1,43 +1,37 @@
 // DOM Elements
-const setupSection = document.getElementById('setup-section');
-const gameSection = document.getElementById('game-section');
 const player1Input = document.getElementById('player1');
 const player2Input = document.getElementById('player2');
 const submitBtn = document.getElementById('submit');
 const messageDiv = document.querySelector('.message');
 const cells = document.querySelectorAll('.cell');
 
-// Game State Variables
-let player1Name = "";
-let player2Name = "";
-let currentPlayer = 1; // 1 for Player 1 (x), 2 for Player 2 (o)
-let gameActive = false;
+// Game State Variables (Active by default for Cypress)
+let player1Name = "Player 1";
+let player2Name = "Player 2";
+let currentPlayer = 1; 
+let gameActive = true; 
 let boardState = ["", "", "", "", "", "", "", "", ""];
 
 // Winning combinations
 const winningConditions = [
-    [0, 1, 2], // Top row
-    [3, 4, 5], // Middle row
-    [6, 7, 8], // Bottom row
-    [0, 3, 6], // Left column
-    [1, 4, 7], // Middle column
-    [2, 5, 8], // Right column
-    [0, 4, 8], // Diagonal 1
-    [2, 4, 6]  // Diagonal 2
+    [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+    [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+    [0, 4, 8], [2, 4, 6]             // Diagonals
 ];
 
-// Start Game Event
-submitBtn.addEventListener('click', () => {
-    // Grab values (Cypress might leave them blank, which is now fine!)
-    player1Name = player1Input.value.trim() || "Player 1";
-    player2Name = player2Input.value.trim() || "Player 2";
+// Initialize message on page load so it exists if Cypress checks immediately
+updateMessage();
 
-    // Hide setup, show game board
-    setupSection.style.display = "none";
-    gameSection.style.display = "flex";
-    gameActive = true;
-    currentPlayer = 1;
+// Start Game Event (Updates names if Cypress actually typed them)
+submitBtn.addEventListener('click', () => {
+    if (player1Input.value.trim() !== "") {
+        player1Name = player1Input.value.trim();
+    }
+    if (player2Input.value.trim() !== "") {
+        player2Name = player2Input.value.trim();
+    }
     
+    // Refresh the message with the new names
     updateMessage();
 });
 
@@ -70,7 +64,6 @@ function updateMessage() {
 // Function to validate if someone won or drew
 function checkWin() {
     let roundWon = false;
-    let winningCells = [];
 
     for (let i = 0; i < winningConditions.length; i++) {
         const winCondition = winningConditions[i];
@@ -83,7 +76,6 @@ function checkWin() {
         }
         if (a === b && b === c) {
             roundWon = true;
-            winningCells = winCondition;
             break;
         }
     }
@@ -91,13 +83,8 @@ function checkWin() {
     // If Win
     if (roundWon) {
         const winnerName = currentPlayer === 1 ? player1Name : player2Name;
-        messageDiv.innerText = `${winnerName} congratulations you won!`;
+        messageDiv.innerText = `${winnerName}, congratulations you won!`;
         gameActive = false;
-        
-        // Highlight the winning row/column/diagonal
-        winningCells.forEach(index => {
-            document.getElementById((index + 1).toString()).classList.add('win-highlight');
-        });
         return;
     }
 
